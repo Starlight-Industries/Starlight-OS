@@ -1,7 +1,7 @@
 use std::fs;
 use std::process::Command;
 
-use anyhow::{Context, Result};
+use anyhow::{anyhow, Context, Result};
 
 use crate::kbuild::{build_aarch64, build_limine, build_riscv64, build_x86_64};
 
@@ -31,12 +31,12 @@ pub fn iso_create_riscv64() -> Result<()> {
 
     iso_root_setup().context("Failed to set up iso_root")?;
     create_iso_with_bootloader_riscv64();
-    iso_root_remove().context("Failed to build riscv64 ISO")?;
+    // iso_root_remove().context("Failed to build riscv64 ISO")?;
     Ok(())
 }
 
 fn iso_root_setup() -> Result<()> {
-    if fs::metadata("iso_root").is_ok() {
+    if fs::exists("iso_root")? {
         Command::new("rm")
             .arg("-rf")
             .arg("iso_root")
@@ -57,12 +57,17 @@ fn iso_root_setup() -> Result<()> {
 }
 
 fn iso_root_remove() -> Result<()> {
-    match fs::metadata("iso_root") {
-        Ok(_) => {
-            fs::remove_dir_all("iso_root")?;
-            Ok(())
+    match fs::exists("iso_root") {
+        Ok(b) => {
+            if b {
+                // Spooky!
+                fs::remove_dir_all("iso_root")?;
+                Ok(())
+            } else {
+                Err(anyhow!("Iso root did not exist"))
+            }
         }
-        Err(e) => Err(anyhow::anyhow!(format!("Error: {e}"))),
+        Err(e) => Err(anyhow!("{e}")),
     }
 }
 
@@ -115,7 +120,7 @@ fn create_iso_with_bootloader_x86_64() -> Result<()> {
         .args(&["bios-install", &format!("{}.iso", "ineptos-x86_64")])
         .status()
         .context("Failed to run limine bios-install")?;
-    iso_root_remove().context("Failed to remove iso_root")?;
+    // iso_root_remove().context("Failed to remove iso_root")?;
 
     Ok(())
 }
