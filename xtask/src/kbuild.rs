@@ -19,7 +19,7 @@ pub fn build_x86_64() -> Result<()> {
         .output()
         .context("Failed to build kernel")?;
 
-    let ineptos_binary_path = PathBuf::from("target/x86_64-unknown-none/debug/./ineptOS");
+    let ineptos_binary_path = PathBuf::from("target/debug/./ineptOS");
     fs::copy(&ineptos_binary_path, &PathBuf::from("kernel/kernel"))
         .context("Failed to find kernel binary")?;
 
