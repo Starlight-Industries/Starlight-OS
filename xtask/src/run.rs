@@ -1,8 +1,12 @@
 use std::process::Command;
 
+use anyhow::Context;
+use anyhow::Ok;
+use anyhow::Result;
+
 use crate::iso::{iso_create_aarch64, iso_create_riscv64, iso_create_x86_64, ovmf_setup};
 
-pub fn qemu_open_x86_64() {
+pub fn qemu_open_x86_64() -> Result<()> {
     /*
     qemu-system-x86_64 \
     -M q35 \
@@ -12,10 +16,10 @@ pub fn qemu_open_x86_64() {
     -m 2G
      */
 
-    ovmf_setup(&"x86_64");
-    iso_create_x86_64();
+    ovmf_setup(&"x86_64").context("Failed to set up OVMF")?;
+    iso_create_x86_64().context("Failed to create x86_64 ISO")?;
 
-    let _ = Command::new("qemu-system-x86_64")
+    Command::new("qemu-system-x86_64")
         .arg("-M")
         .arg("q35")
         .arg("-drive")
@@ -27,17 +31,18 @@ pub fn qemu_open_x86_64() {
         .arg("-m")
         .arg("2G")
         .status()
-        .expect("Failed to execute QEMU");
+        .context("Failed to execute QEMU")?;
+    Ok(())
 }
 
-pub fn qemu_open_aarch64() {
-    ovmf_setup(&"aarch64");
-    iso_create_aarch64();
+pub fn qemu_open_aarch64() -> Result<()> {
+    ovmf_setup(&"aarch64").context("test")?;
+    iso_create_aarch64().context("Failed to create aarch64 ISO")?;
     unimplemented!();
 }
 
-pub fn qemu_open_riscv64() {
-    ovmf_setup(&"riscv64");
-    iso_create_riscv64();
+pub fn qemu_open_riscv64() -> Result<()> {
+    ovmf_setup(&"riscv64").context("sjdf")?;
+    iso_create_riscv64().context("Failed to create riscV ISO")?;
     unimplemented!();
 }
