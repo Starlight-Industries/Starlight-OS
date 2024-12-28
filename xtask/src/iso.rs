@@ -37,11 +37,7 @@ pub fn iso_create_riscv64() -> Result<()> {
 
 fn iso_root_setup() -> Result<()> {
     if fs::exists("iso_root")? {
-        Command::new("rm")
-            .arg("-rf")
-            .arg("iso_root")
-            .output()
-            .context("Failed to remove iso_root directory")?;
+        fs::remove_dir_all("iso_root").context("Failed to remove iso_root")?;
     }
 
     fs::create_dir_all("iso_root/boot").context("Failed to create iso_root/boot directory")?;
@@ -106,7 +102,7 @@ fn create_iso_with_bootloader_x86_64() -> Result<()> {
             "--protective-msdos-label",
             "iso_root",
             "-o",
-            &format!("{}.iso", "ineptos-x86_64"),
+            &format!("{}.iso", "starlightOS-x86_64"),
         ])
         .status()
         .context("failed to pack ISO with xorriso")?;
@@ -117,7 +113,7 @@ fn create_iso_with_bootloader_x86_64() -> Result<()> {
     }
 
     Command::new("./limine/limine")
-        .args(&["bios-install", &format!("{}.iso", "ineptos-x86_64")])
+        .args(&["bios-install", &format!("{}.iso", "starlightOS-x86_64")])
         .status()
         .context("Failed to run limine bios-install")?;
     // iso_root_remove().context("Failed to remove iso_root")?;

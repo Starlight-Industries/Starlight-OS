@@ -9,9 +9,9 @@ pub fn clean(target: &str) -> Result<()> {
 }
 
 fn clean_files(target: &str) -> Result<()> {
-    //ineptos-x86_64
+    //starlightOS-x86_64
 
-    let image_name = format!("ineptos-{}", { target });
+    let image_name = format!("starlightOS-{}", { target });
     let iso = &format!("{}.iso", image_name);
     let hdd = &format!("{}.hdd", image_name);
     println!("removing iso root");

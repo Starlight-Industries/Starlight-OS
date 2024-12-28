@@ -12,7 +12,7 @@ pub fn qemu_open_x86_64() -> Result<()> {
     -M q35 \
     -drive if=pflash,unit=0,format=raw,file=ovmf/ovmf-code-x86_64.fd,readonly=on \
     -drive if=pflash,unit=1,format=raw,file=ovmf/ovmf-vars-x86_64.fd \
-    -cdrom ineptos-x86_64.iso \
+    -cdrom starlightOS-x86_64.iso \
     -m 2G
      */
 
@@ -27,7 +27,7 @@ pub fn qemu_open_x86_64() -> Result<()> {
         .arg("-drive")
         .arg("if=pflash,unit=1,format=raw,file=ovmf/ovmf-vars-x86_64.fd")
         .arg("-cdrom")
-        .arg("ineptos-x86_64.iso")
+        .arg("starlightOS-x86_64.iso")
         .arg("-m")
         .arg("2G")
         .status()

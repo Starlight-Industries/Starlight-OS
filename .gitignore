@@ -7,5 +7,5 @@ Cargo.lock
 /ovmf/*
 **/target
 /limine/*
-ineptos-x86_64.iso
+starlightOS-x86_64.iso
 /kernel/kernel
