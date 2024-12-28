@@ -18,8 +18,12 @@ pub fn build_x86_64() -> Result<()> {
         .arg("--target=x86_64-unknown-none")
         .output()
         .context("Failed to build kernel")?;
-
-    let ineptos_binary_path = PathBuf::from("target/debug/./ineptOS");
+    let project_root = project_root::get_project_root()?;
+    println!("Project root: {}", project_root.display());
+    let ineptos_binary_path = project_root.join("target/x86_64-unknown-none/debug/ineptOS");
+    println!("binary path: {}", ineptos_binary_path.display());
+    fs::create_dir_all("kernel").expect("Failed to create kernel directory");
+    // println!("{}", ineptos_binary_path.canonicalize().unwrap().display());
     fs::copy(&ineptos_binary_path, &PathBuf::from("kernel/kernel"))
         .context("Failed to find kernel binary")?;
 
