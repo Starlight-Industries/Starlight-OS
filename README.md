@@ -172,8 +172,8 @@ Because of this, It is not inherently bound to any specific standard or specific
 ## Contributing
 
 Thank you for considering contributing to StarlightOS! We appreciate your interest in helping us improve the project. Your contributions are valuable and help us make StarlightOS even better. As of now, we are still in the early stages of development, and we are planning the roadmap for the future. untill then, we are not accepting any major contributions.
-<a href="https://github.com/Starlight-Industries/Comet/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Starlight-Industries/Comet" />
+<a href="https://github.com/Starlight-Industries/Starlight-OS/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Starlight-Industries/Starlight-OS" />
 </a>
 
 For more information on how to contribute, please refer to the [Contributing Guide](CONTRIBUTING.md).
